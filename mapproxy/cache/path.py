@@ -44,8 +44,18 @@ def dimensions_part(dimensions):
     """
     dims = NoCaseMultiDict(dimensions)
     dimensionlist = dims.keys()
-    return os.path.join(*(map(lambda k: k + "-" + str(dims.get(k, 'default')),
+    fullPath = os.path.join(*(map(lambda k: k + "-" + str(dims.get(k, 'default')),
                                   dimensionlist)))
+    
+
+    drive, path = os.path.splitdrive(fullPath)
+    """
+    Ensure file name is valid
+    """
+    for invalid_char in ":\"*?<>|":
+        path = path.replace(invalid_char, "_")
+
+    return drive + path
 
 def level_location(level, cache_dir, dimensions=None):
     """
