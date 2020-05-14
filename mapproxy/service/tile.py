@@ -281,6 +281,8 @@ class TileLayer(object):
                 dimensions[dimension] = value
             elif not value or value == 'default':
                 dimensions[dimension] = values.default
+            elif "*" in values:
+                dimensions[dimension] = value
             else:
                 raise RequestError('invalid dimension value (%s=%s).'
                     % (dimension, value), request=tile_request,
