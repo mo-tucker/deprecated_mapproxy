@@ -23,6 +23,7 @@ import shutil
 import sys
 import textwrap
 import logging
+import debugpy
 
 from mapproxy.compat import iteritems
 from mapproxy.script.conf.app import config_command
@@ -47,6 +48,11 @@ def setup_logging(level=logging.INFO, format=None):
     mapproxy_log.addHandler(ch)
 
 def serve_develop_command(args):
+    if os.environ.get('WERKZEUG_RUN_MAIN') == 'true':
+        print("Waiting for debugger attach")
+        debugpy.listen(('localhost', 5678))
+        debugpy.wait_for_client()
+        
     parser = optparse.OptionParser("usage: %prog serve-develop [options] mapproxy.yaml")
     parser.add_option("-b", "--bind",
                       dest="address", default='127.0.0.1:8080',
