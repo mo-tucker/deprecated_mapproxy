@@ -44,7 +44,7 @@ def dimensions_part(dimensions):
     """
     dims = NoCaseMultiDict(dimensions)
     dimensionlist = dims.keys()
-    fullPath = os.path.join(*(map(lambda k: k + "-" + str(dims.get(k, 'default')),
+    fullPath = os.sep.join((map(lambda k: k + "-" + str(dims.get(k, 'default')),
                                   dimensionlist)))
     
 
