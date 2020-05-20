@@ -48,10 +48,13 @@ def setup_logging(level=logging.INFO, format=None):
     mapproxy_log.addHandler(ch)
 
 def serve_develop_command(args):
+    print("Checking for reloader")
     if os.environ.get('WERKZEUG_RUN_MAIN') == 'true':
         print("Waiting for debugger attach")
         debugpy.listen(('localhost', 5678))
         debugpy.wait_for_client()
+    else:
+        print("No need to attach debugger")
         
     parser = optparse.OptionParser("usage: %prog serve-develop [options] mapproxy.yaml")
     parser.add_option("-b", "--bind",
