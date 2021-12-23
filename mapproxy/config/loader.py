@@ -1064,7 +1064,6 @@ class CacheConfiguration(ConfigurationBase):
             log.warning('link_single_color_images not supported on windows')
             link_single_color_images = False
 
-
         return FileCache(
             cache_dir,
             file_ext=file_ext,
@@ -1714,6 +1713,7 @@ class LayerConfiguration(ConfigurationBase):
                         lg_sources.append(lg_source)
 
         res_range = resolution_range(self.conf)
+        
         dimensions = None
         if 'dimensions' in self.conf.keys():
             dimensions = self.dimensions()

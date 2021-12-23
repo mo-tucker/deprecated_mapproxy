@@ -34,6 +34,27 @@ def location_funcs(layout):
     else:
         raise ValueError('unknown directory_layout "%s"' % layout)
 
+def dimensions_part(dimensions):
+    """
+    Return the subpath where all tiles for `dimensions` will be stored.
+    >>> dimensions_part(['reference-time', 'time'], {"time": "2016-11-24T18:00Z", "reference-time": "2016-11-24T00:00Z"})
+    '2016-11-24T00:00Z/2016-11-24T18:00Z'
+    """
+    dims = NoCaseMultiDict(dimensions)
+    dimensionlist = dims.keys()
+    fullPath = os.sep.join((map(lambda k: k + "-" + str(dims.get(k, 'default')),
+                                  dimensionlist)))
+
+
+    drive, path = os.path.splitdrive(fullPath)
+    """
+    Ensure file name is valid
+    """
+    for invalid_char in ":\"*?<>|":
+        path = path.replace(invalid_char, "_")
+
+    return drive + path
+
 def level_location(level, cache_dir, dimensions=None):
     """
     Return the path where all tiles for `level` will be stored.
