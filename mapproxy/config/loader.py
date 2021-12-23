@@ -1729,7 +1729,7 @@ class LayerConfiguration(ConfigurationBase):
         dimensions = {}
         for dimension, conf in iteritems(self.conf.get('dimensions', {})):
             raw_values = conf.get('values')
-            if len(raw_values) == 1:
+            if len(raw_values) == 1 and raw_values[0] != "*":
                 values = parse_datetime_range(raw_values[0])
             else:
                 values = [str(val) for val in  conf.get('values', ['default'])]
